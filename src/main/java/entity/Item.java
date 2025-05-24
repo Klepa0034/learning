@@ -26,13 +26,6 @@ public class Item {
         return this.id;
     }
 
-    public void setName_items(String name_items) {
-        this.name_items = name_items;
-    }
-
-    public void setCost_items(long cost_items) {
-        this.cost_items = cost_items;
-    }
 
     public void setId(int id) {
         this.id = id;

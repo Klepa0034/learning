@@ -1,52 +1,52 @@
 package com.example;
 
-import controler.ControlerMySQL;
-import controler.ControlerSQL;
-import controler.ControlerServerSQL;
+import controler.ItemController;
+import controler.EmployeeController;
+import controler.UserController;
 import display.Display;
-import manager.ConectionManagerMySQL;
-import manager.ConectionManagerSQLRServer;
-import manager.ConnectionManager;
-import repository.Repository;
-import repository.RepositorySQLServer;
-import repository.RepositorySql;
-import result.ResultItem;
-import result.ResultItemP;
-import result.ResultUsers;
-import service.ServiceMySSQL;
-import service.ServiceServerSQL;
-import service.ServiceSql;
-import sqlManager.SqlManager;
-import sqlManager.SqlMyManager;
-import sqlManager.SqlServerManager;
+import manager.impl.ItemConnectionManagerImpl;
+import manager.impl.UserConnectionManagerImpl;
+import manager.impl.EmployeeConnectionManagerImpl;
+import repository.impl.ItemRepositoryImpl;
+import repository.impl.UserRepositoryImpl;
+import repository.impl.EmployeeRepositoryImpl;
+import result.impl.ItemResultImpl;
+import result.impl.EmployeeResultImpl;
+import result.impl.UserResultImpl;
+import service.impl.EmployeeServiceImpl;
+import service.impl.UserServiceImpl;
+import service.impl.ItemServiceImpl;
+import manager.impl.EmployeeManagerImpl;
+import manager.impl.ItemManagerImpl;
+import manager.impl.UserManagerImpl;
 
 import java.sql.SQLException;
-import java.util.Random;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        ResultItem resultItem = new ResultItem();
-        ConectionManagerMySQL conectionManagerMySQL = new ConectionManagerMySQL();
-        SqlMyManager sqlMyManager = new SqlMyManager();
-        Repository repository = new Repository(conectionManagerMySQL, sqlMyManager, resultItem);
-        ServiceMySSQL serviceMySSQL = new ServiceMySSQL(repository);
-        ControlerMySQL controlerMySQL = new ControlerMySQL(serviceMySSQL);
+        //обычная sql
+        ItemResultImpl itemResultImpl = new ItemResultImpl();
+        ItemConnectionManagerImpl itemConnectionManagerImpl = new ItemConnectionManagerImpl();
+        ItemManagerImpl itemManagerImpl = new ItemManagerImpl();
+        ItemRepositoryImpl itemRepositoryImpl = new ItemRepositoryImpl(itemConnectionManagerImpl, itemManagerImpl, itemResultImpl);
+        ItemServiceImpl itemServiceImpl = new ItemServiceImpl(itemRepositoryImpl);
+        ItemController itemController = new ItemController(itemServiceImpl);
+        //
+        UserResultImpl userResultImpl = new UserResultImpl();
+        UserConnectionManagerImpl userConnectionManagerImpl = new UserConnectionManagerImpl();
+        UserManagerImpl userManagerImpl = new UserManagerImpl();
+        UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl(userConnectionManagerImpl, userManagerImpl, userResultImpl);
+        UserServiceImpl userServiceImpl = new UserServiceImpl(userRepositoryImpl);
+        UserController userController = new UserController(userServiceImpl);
+        //postgres
+        EmployeeResultImpl employeeResultImpl = new EmployeeResultImpl();
+        EmployeeConnectionManagerImpl employeeConnectionManagerImpl = new EmployeeConnectionManagerImpl();
+        EmployeeManagerImpl employeeManagerImpl = new EmployeeManagerImpl();
+        EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl(employeeConnectionManagerImpl, employeeManagerImpl, employeeResultImpl);
+        EmployeeServiceImpl employeeServiceImpl =new EmployeeServiceImpl(employeeRepositoryImpl);
+        EmployeeController employeeController = new EmployeeController(employeeServiceImpl);
 
-        ResultUsers resultUsers = new ResultUsers();
-        ConectionManagerSQLRServer conectionManagerSQLRServer = new ConectionManagerSQLRServer();
-        SqlServerManager sqlServerManager = new SqlServerManager();
-        RepositorySQLServer repositorySQLServer = new RepositorySQLServer(conectionManagerSQLRServer, sqlServerManager, resultUsers);
-        ServiceServerSQL serviceServerSQL = new ServiceServerSQL(repositorySQLServer);
-        ControlerServerSQL controlerServerSQL = new ControlerServerSQL(serviceServerSQL);
-
-        ResultItemP resultItemP = new ResultItemP();
-        ConnectionManager connectionManager = new ConnectionManager();
-        SqlManager sqlManager = new SqlManager();
-        RepositorySql repositorySql = new RepositorySql(connectionManager,sqlManager,resultItemP);
-        ServiceSql serviceSql =new ServiceSql(repositorySql);
-        ControlerSQL controlerSQL = new ControlerSQL(serviceSql);
-
-        Display display = new Display(controlerMySQL, controlerServerSQL,controlerSQL);
+        Display display = new Display(itemController, userController, employeeController);
         display.start();
     }
 }

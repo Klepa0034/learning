@@ -1,36 +1,32 @@
 package display;
 
-import controler.ControlerMySQL;
-import controler.ControlerSQL;
-import controler.ControlerServerSQL;
+import controler.ItemController;
+import controler.EmployeeController;
+import controler.UserController;
 import entity.Item;
-import entity.ItemSql;
-import entity.Users;
-import manager.ConectionManagerMySQL;
-import repository.Repository;
-import service.ServiceMySSQL;
-import sqlManager.SqlMyManager;
+import entity.Employee;
+import entity.User;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Display {
-    private ControlerServerSQL controlerServerSQL;
-    private ControlerMySQL controlerMySQL;
-    private ControlerSQL controlerSQL;
+    private UserController userController;
+    private ItemController itemController;
+    private EmployeeController employeeController;
 
-    public Display(ControlerMySQL controlerMySQL, ControlerServerSQL controlerServerSQL,ControlerSQL controlerSQL) {
-        this.controlerServerSQL = controlerServerSQL;
-        this.controlerMySQL = controlerMySQL;
-        this.controlerSQL = controlerSQL;
+    public Display(ItemController itemController, UserController userController, EmployeeController employeeController) {
+        this.userController = userController;
+        this.itemController = itemController;
+        this.employeeController = employeeController;
     }
 
     public void start() throws SQLException {
         Item item;
-        ItemSql itemSql;
+        Employee employee;
         String name_item;
         long cost_item;
-        Users users;
+        User user;
         String users_names;
         String user_item;
         long price_item;
@@ -55,8 +51,8 @@ public class Display {
             int hz = scanner.nextInt();
             scanner.nextLine();
             switch (hz) {
-                case 1:
-                    controlerMySQL.findAll().forEach(System.out::println);
+                case  1:
+                    itemController.findAll().forEach(System.out::println);
                     break;
                 case 2:
                     System.out.println("Введите название пердмета");
@@ -65,12 +61,12 @@ public class Display {
                     cost_item = scanner.nextLong();
                     item = new Item(name_item, cost_item, 22);
                     System.out.println(item);
-                    controlerMySQL.insert(item);
+                    itemController.insert(item);
                     break;
                 case 3:
                     System.out.println("Введите id предмета который нужно удалить");
                     int deleteId = scanner.nextInt();
-                    controlerMySQL.deleteById(deleteId);
+                    itemController.deleteById(deleteId);
                     break;
                 case 4:
                     System.out.println("Введите id предмета который хотите изменить");
@@ -81,23 +77,23 @@ public class Display {
                     System.out.println("Введите стоимость предмета");
                     cost_item = scanner.nextLong();
                     item = new Item(name_item, cost_item, id);
-                    controlerMySQL.update(item);
+                    itemController.update(item);
                     break;
                 case 5:
-                    controlerServerSQL.findAll().forEach(System.out::println);
+                    userController.findAll().forEach(System.out::println);
                     break;
                 case 6:
                     System.out.println("Введите имя новго пользователя");
                     users_names = scanner.nextLine();
-                    users = new Users(users_names, 11);
-                    System.out.println(users);
-                    controlerServerSQL.insert(users);
+                    user = new User(users_names, 11);
+                    System.out.println(user);
+                    userController.insert(user);
                     break;
                 case 7:
                     System.out.println("Введите id пользователя которого хотите удалить");
                     id = scanner.nextInt();
                     scanner.nextLine();
-                    controlerServerSQL.deleteById(id);
+                    userController.deleteById(id);
                     break;
                 case 8:
                     System.out.println("Введите id пользователя которого хотите изменить");
@@ -105,39 +101,39 @@ public class Display {
                     scanner.nextLine();
                     System.out.println("Введите новое имя пользователя");
                     users_names = scanner.nextLine();
-                    users = new Users(users_names, id);
-                    controlerServerSQL.update(users);
+                    user = new User(users_names, id);
+                    userController.update(user);
                     break;
                 case 9:
-                    controlerSQL.findAll().forEach(System.out::println);
+                    employeeController.findAll().forEach(System.out::println);
                     break;
                 case 10:
-                    System.out.println("Введите название нового предмета");
+                    System.out.println("Введите имя новго сотрудника");
                     name_item = scanner.nextLine();
-                    System.out.println("Введите стоимость предмета");
+                    System.out.println("Введите зп нового сотрудника");
                     price_item = scanner.nextLong();
                     scanner.nextLine();
-                    itemSql = new ItemSql(name_item,price_item,34);
-                    System.out.println(itemSql);
-                    controlerSQL.insert(itemSql);
+                    employee = new Employee(name_item,price_item,34);
+                    System.out.println(employee);
+                    employeeController.insert(employee);
                     break;
                 case 11:
-                    System.out.println("Введите id предмета который хотите удалить");
+                    System.out.println("Введите id сотрудника который хотите удалить");
                     id = scanner.nextInt();
                     scanner.nextLine();
-                    controlerSQL.deleteById(id);
+                    employeeController.deleteById(id);
                     break;
                 case 12:
-                    System.out.println("Введите id предмета который хотите изменить");
+                    System.out.println("Введите id сотрудника который хотите изменить");
                     id = scanner.nextInt();
                     scanner.nextLine();
-                    System.out.println("Введите новое название предмета");
+                    System.out.println("Введите новое имя сотрудника");
                     name_item = scanner.nextLine();
-                    System.out.println("Введите новую стоимость предмета");
+                    System.out.println("Введите новую зарплату сотрудника");
                     price_item = scanner.nextLong();
                     scanner.nextLine();
-                    itemSql = new ItemSql(name_item,price_item,id);
-                    controlerSQL.update(itemSql);
+                    employee = new Employee(name_item,price_item,id);
+                    employeeController.update(employee);
                     break;
 
 
