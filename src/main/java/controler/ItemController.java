@@ -1,31 +1,32 @@
 package controler;
 
 import entity.Item;
+import service.ItemService;
 import service.impl.ItemServiceImpl;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class ItemController {
-    private ItemServiceImpl itemServiceImpl;
+    private ItemService itemService;
 
-    public ItemController(ItemServiceImpl itemServiceImpl) {
-        this.itemServiceImpl = itemServiceImpl;
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
     }
 
     public List<Item> findAll() throws SQLException {
-        return itemServiceImpl.findAll();
+        return itemService.findAll();
     }
 
     public void insert(Item item) throws SQLException {
-        itemServiceImpl.insert(item);
+        itemService.insert(item);
     }
 
     public void deleteById(int id) throws SQLException {
-        itemServiceImpl.deleteById(id);
+        itemService.deleteById(id);
     }
 
     public void update(Item item) throws SQLException {
-        itemServiceImpl.update(item);
+        itemService.update(item);
     }
 }

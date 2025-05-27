@@ -1,23 +1,23 @@
 package entity;
 
 public class Item {
-    private String name_items;
-    private Long cost_items;
+    private String nameItems;
+    private Long costItems;
     private int id;
 
-    public String getName_items() {
-        return this.name_items;
+    public String getNameItems() {
+        return this.nameItems;
     }
 
-    public long getCost_items() {
-        return this.cost_items;
+    public long getCostItems() {
+        return this.costItems;
     }
 
     @Override
     public String toString() {
         return "Item{" +
-                "name_items=" + name_items +
-                ", cost_items=" + cost_items +
+                "name_items=" + nameItems +
+                ", cost_items=" + costItems +
                 ", id=" + id +
                 '}';
     }
@@ -31,9 +31,9 @@ public class Item {
         this.id = id;
     }
 
-    public Item(String name_items, long cost_items, int id) {
-        this.name_items = name_items;
-        this.cost_items = cost_items;
+    public Item(String nameItems, long costItems, int id) {
+        this.nameItems = nameItems;
+        this.costItems = costItems;
         this.id = id;
     }
 }

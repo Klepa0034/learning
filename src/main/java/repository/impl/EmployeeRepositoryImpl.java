@@ -1,7 +1,9 @@
 package repository.impl;
 import entity.Employee;
-import manager.impl.EmployeeConnectionManagerImpl;
+import manager.ConnectionManager;
+import manager.QueryManager;
 import repository.EmployeeRepository;
+import result.EmployeeResult;
 import result.impl.EmployeeResultImpl;
 import manager.impl.EmployeeManagerImpl;
 
@@ -11,21 +13,22 @@ import java.sql.Statement;
 import java.util.List;
 
 public class EmployeeRepositoryImpl implements EmployeeRepository {
-    //postgres
-    private EmployeeConnectionManagerImpl employeeConnectionManagerImpl;
-    private EmployeeManagerImpl employeeManagerImpl;
-    private EmployeeResultImpl employeeResultImpl;
+    //postgres EmployeeConnectionManagerImpl
+    private QueryManager queryManager;
+    private EmployeeResult employeeResult;
+    private ConnectionManager connectionManager;
 
-    public EmployeeRepositoryImpl(EmployeeConnectionManagerImpl employeeConnectionManagerImpl, EmployeeManagerImpl employeeManagerImpl, EmployeeResultImpl employeeResultImpl) {
-        this.employeeConnectionManagerImpl = employeeConnectionManagerImpl;
-        this.employeeManagerImpl = employeeManagerImpl;
-        this.employeeResultImpl = employeeResultImpl;
+
+    public EmployeeRepositoryImpl(QueryManager queryManager, EmployeeResult employeeResult, ConnectionManager connectionManager) {
+        this.queryManager = queryManager;
+        this.employeeResult = employeeResult;
+        this.connectionManager = connectionManager;
     }
 
     public List<Employee> findAll() throws SQLException  {
-       Statement statement = employeeConnectionManagerImpl.getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(employeeManagerImpl.getSelectAllQuery("employees"));
-        List<Employee> employees = employeeResultImpl.resultToListEmployee(resultSet);
+       Statement statement = connectionManager.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(queryManager.getSelectAllQuery("employees"));
+        List<Employee> employees = employeeResult.resultToListEmployee(resultSet);
         resultSet.close();
         statement.close();
         return employees;
@@ -33,18 +36,18 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     public void update(Employee employee) throws SQLException {
-        Statement statement = employeeConnectionManagerImpl.getConnection().createStatement();
-        statement.executeUpdate(employeeManagerImpl.updateQuery("employees", "name='%s',salary=%d".formatted(employee.getName(), employee.getSalary()), "id=%d".formatted(employee.getId())));
+        Statement statement = connectionManager.getConnection().createStatement();
+        statement.executeUpdate(queryManager.updateQuery("employees", "name='%s',salary=%d".formatted(employee.getName(), employee.getSalary()), "id=%d".formatted(employee.getId())));
     }
 
     public void insert(Employee employee) throws SQLException {
-        Statement statement = employeeConnectionManagerImpl.getConnection().createStatement();
-        statement.execute(EmployeeManagerImpl.insertQuery("employees", "(name,salary)", "('%s',%d)").formatted(employee.getName(), employee.getSalary()));
+        Statement statement = connectionManager.getConnection().createStatement();
+        statement.execute(queryManager.insertQuery("employees", "(name,salary)", "('%s',%d)").formatted(employee.getName(), employee.getSalary()));
         statement.close();
     }
 
     public void deleteById(int id) throws SQLException {
-        Statement statement = employeeConnectionManagerImpl.getConnection().createStatement();
-        statement.execute(employeeManagerImpl.deleteQuery("employees", "id_item=%d".formatted(id)));
+        Statement statement = connectionManager.getConnection().createStatement();
+        statement.execute(queryManager.deleteQuery("employees", "id_item=%d".formatted(id)));
     }
 }

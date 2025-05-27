@@ -31,9 +31,9 @@ public class Employee {
         this.id = id;
     }
 
-    public Employee(String name_items, long cost_items, int id) {
-        this.name = name_items;
-        this.salary = cost_items;
+    public Employee(String name, long salary, int id) {
+        this.name = name;
+        this.salary = salary;
         this.id = id;
 
     }

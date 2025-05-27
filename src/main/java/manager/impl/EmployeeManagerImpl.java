@@ -1,8 +1,8 @@
 package manager.impl;
 
-import manager.ConnectionManagerSQL;
+import manager.QueryManager;
 
-public class EmployeeManagerImpl implements ConnectionManagerSQL {
+public class EmployeeManagerImpl implements QueryManager {
     public String getSelectAllQuery(String tableName) {
         return "SELECT * FROM %s".formatted(tableName);
     }
@@ -15,7 +15,7 @@ public class EmployeeManagerImpl implements ConnectionManagerSQL {
         return "DELETE FROM %s WHERE %s;".formatted(tableName, conditions);
     }
 
-    public static String insertQuery(String tableName, String definitions, String values) {
+    public  String insertQuery(String tableName, String definitions, String values) {
         return "INSERT INTO %s %s VALUES %s;".formatted(tableName, definitions, values);
     }
 }

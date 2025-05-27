@@ -1,8 +1,8 @@
 package manager.impl;
 
-import manager.ConnectionManagerSQL;
+import manager.QueryManager;
 
-public class UserManagerImpl implements ConnectionManagerSQL {
+public class UserManagerImpl implements QueryManager {
     public String getSelectAllQuery(String tableName) {
         return "SELECT * FROM %s".formatted(tableName);
     }

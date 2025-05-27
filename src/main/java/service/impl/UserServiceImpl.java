@@ -1,6 +1,7 @@
 package service.impl;
 
 import entity.User;
+import repository.UserRepository;
 import repository.impl.UserRepositoryImpl;
 import service.UserService;
 
@@ -8,14 +9,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private UserRepositoryImpl userRepositoryImpl;
+    private UserRepository userRepository;
 
-    public UserServiceImpl(UserRepositoryImpl userRepositoryImpl) {
-        this.userRepositoryImpl = userRepositoryImpl;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public List<User> findAll() throws SQLException {
-        List<User> all = userRepositoryImpl.findAll();
+        List<User> all = userRepository.findAll();
         if (all.isEmpty()) {
             throw new RuntimeException("Пользователи не найдены");
         }
@@ -23,14 +24,14 @@ public class UserServiceImpl implements UserService {
     }
 
     public void insert(User user) throws SQLException {
-        userRepositoryImpl.insert(user);
+        userRepository.insert(user);
     }
 
     public void update(User user) throws SQLException {
-        userRepositoryImpl.update(user);
+        userRepository.update(user);
     }
 
     public void deleteById(int id) throws SQLException {
-        userRepositoryImpl.deleteById(id);
+        userRepository.deleteById(id);
     }
 }

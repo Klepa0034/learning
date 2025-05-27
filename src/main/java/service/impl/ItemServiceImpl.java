@@ -1,6 +1,7 @@
 package service.impl;
 
 import entity.Item;
+import repository.ItemRepository;
 import repository.impl.ItemRepositoryImpl;
 import service.ItemService;
 
@@ -8,15 +9,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ItemServiceImpl implements ItemService {
-    private ItemRepositoryImpl itemRepositoryImpl;
+    private ItemRepository itemRepository;
 
-    public ItemServiceImpl(ItemRepositoryImpl itemRepositoryImpl) {
-        this.itemRepositoryImpl = itemRepositoryImpl;
+    public ItemServiceImpl(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
     }
 
 
     public List<Item> findAll() throws SQLException {
-        List<Item> all = itemRepositoryImpl.findAll();
+        List<Item> all = itemRepository.findAll();
         if (all.isEmpty()) {
             throw new RuntimeException("Вещи не найдены");
         }
@@ -24,14 +25,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public void insert(Item item) throws SQLException {
-        itemRepositoryImpl.insert(item);
+        itemRepository.insert(item);
     }
 
     public void deleteById(int id) throws SQLException {
-        itemRepositoryImpl.deleteById(id);
+        itemRepository.deleteById(id);
     }
 
     public void update(Item item) throws SQLException {
-        itemRepositoryImpl.update(item);
+        itemRepository.update(item);
     }
 }

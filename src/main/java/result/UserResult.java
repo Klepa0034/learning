@@ -7,6 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface UserResult {
-    public List<User> resultToListUsers(ResultSet resultSet) throws SQLException;
+     List<User> resultToListUsers(ResultSet resultSet) throws SQLException;
 
 }

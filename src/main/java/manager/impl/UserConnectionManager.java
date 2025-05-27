@@ -6,13 +6,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class EmployeeConnectionManagerImpl implements ConnectionManager {
-    //postgres
-    private String url = "jdbc:postgresql://localhost:5432/item";
-    private String password = "password";
-    private String name = "name";
+public class UserConnectionManager implements ConnectionManager {
+
+    private String url = "jdbc:sqlserver://localhost:1433;databaseName=users;encrypt=true;trustServerCertificate=true;";
+    private String password = "PASSword123";
+    private String name = "SA";
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, name, password);
     }
+
 }

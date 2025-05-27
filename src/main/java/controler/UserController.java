@@ -1,32 +1,33 @@
 package controler;
 
 import entity.User;
+import service.UserService;
 import service.impl.UserServiceImpl;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserController {
-    private UserServiceImpl userServiceImpl;
+    private UserService userService;
 
-    public UserController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     public List<User> findAll() throws SQLException {
-        return userServiceImpl.findAll();
+        return userService.findAll();
     }
 
     public void insert(User user) throws SQLException {
-        userServiceImpl.insert(user);
+        userService.insert(user);
     }
 
     public void update(User user) throws SQLException {
-        userServiceImpl.update(user);
+        userService.update(user);
     }
 
     public void deleteById(int id) throws SQLException {
-        userServiceImpl.deleteById(id);
+        userService.deleteById(id);
     }
 
 }

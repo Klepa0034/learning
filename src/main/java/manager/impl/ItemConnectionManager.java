@@ -6,14 +6,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class UserConnectionManagerImpl implements ConnectionManager {
-    //hyeta
-    private String url = "jdbc:sqlserver://localhost:1433;databaseName=users;encrypt=true;trustServerCertificate=true;";
-    private String password = "PASSword123";
-    private String name = "SA";
+public class ItemConnectionManager implements ConnectionManager {
+    private String url = "jdbc:mysql://localhost:3306/items";
+    private String password = "password";
+    private String name = "root";
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, name, password);
     }
-
 }

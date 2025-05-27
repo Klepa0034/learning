@@ -4,14 +4,16 @@ import controler.ItemController;
 import controler.EmployeeController;
 import controler.UserController;
 import display.Display;
-import manager.impl.ItemConnectionManagerImpl;
-import manager.impl.UserConnectionManagerImpl;
-import manager.impl.EmployeeConnectionManagerImpl;
+import manager.ConnectionManager;
+import manager.QueryManager;
+import manager.impl.ItemConnectionManager;
+import manager.impl.UserConnectionManager;
+import manager.impl.EmployeeConnectionManager;
 import repository.impl.ItemRepositoryImpl;
 import repository.impl.UserRepositoryImpl;
-import repository.impl.EmployeeRepositoryImpl;
-import result.impl.ItemResultImpl;
+import result.EmployeeResult;
 import result.impl.EmployeeResultImpl;
+import result.impl.ItemResultImpl;
 import result.impl.UserResultImpl;
 import service.impl.EmployeeServiceImpl;
 import service.impl.UserServiceImpl;
@@ -26,23 +28,23 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         //обычная sql
         ItemResultImpl itemResultImpl = new ItemResultImpl();
-        ItemConnectionManagerImpl itemConnectionManagerImpl = new ItemConnectionManagerImpl();
+        ItemConnectionManager itemConnectionManager = new ItemConnectionManager();
         ItemManagerImpl itemManagerImpl = new ItemManagerImpl();
-        ItemRepositoryImpl itemRepositoryImpl = new ItemRepositoryImpl(itemConnectionManagerImpl, itemManagerImpl, itemResultImpl);
+        ItemRepositoryImpl itemRepositoryImpl = new ItemRepositoryImpl(itemConnectionManager, itemManagerImpl, itemResultImpl);
         ItemServiceImpl itemServiceImpl = new ItemServiceImpl(itemRepositoryImpl);
         ItemController itemController = new ItemController(itemServiceImpl);
         //
         UserResultImpl userResultImpl = new UserResultImpl();
-        UserConnectionManagerImpl userConnectionManagerImpl = new UserConnectionManagerImpl();
+        UserConnectionManager userConnectionManager = new UserConnectionManager();
         UserManagerImpl userManagerImpl = new UserManagerImpl();
-        UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl(userConnectionManagerImpl, userManagerImpl, userResultImpl);
+        UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl(userConnectionManager, userManagerImpl, userResultImpl);
         UserServiceImpl userServiceImpl = new UserServiceImpl(userRepositoryImpl);
         UserController userController = new UserController(userServiceImpl);
         //postgres
-        EmployeeResultImpl employeeResultImpl = new EmployeeResultImpl();
-        EmployeeConnectionManagerImpl employeeConnectionManagerImpl = new EmployeeConnectionManagerImpl();
-        EmployeeManagerImpl employeeManagerImpl = new EmployeeManagerImpl();
-        EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl(employeeConnectionManagerImpl, employeeManagerImpl, employeeResultImpl);
+        ConnectionManager connectionManager = new EmployeeConnectionManager();
+        QueryManager queryManager = new EmployeeManagerImpl();
+        EmployeeResult employeeResult = new EmployeeResultImpl();
+        repository.impl.EmployeeRepositoryImpl employeeRepositoryImpl = new repository.impl.EmployeeRepositoryImpl(queryManager,employeeResult,connectionManager);
         EmployeeServiceImpl employeeServiceImpl =new EmployeeServiceImpl(employeeRepositoryImpl);
         EmployeeController employeeController = new EmployeeController(employeeServiceImpl);
 
