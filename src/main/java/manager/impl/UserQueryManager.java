@@ -2,7 +2,7 @@ package manager.impl;
 
 import manager.QueryManager;
 
-public class UserManagerImpl implements QueryManager {
+public class UserQueryManager implements QueryManager {
     public String getSelectAllQuery(String tableName) {
         return "SELECT * FROM %s".formatted(tableName);
     }

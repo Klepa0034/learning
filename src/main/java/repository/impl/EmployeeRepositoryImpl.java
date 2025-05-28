@@ -4,8 +4,6 @@ import manager.ConnectionManager;
 import manager.QueryManager;
 import repository.EmployeeRepository;
 import result.EmployeeResult;
-import result.impl.EmployeeResultImpl;
-import manager.impl.EmployeeManagerImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
